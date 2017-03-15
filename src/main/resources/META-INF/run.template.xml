@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<VertxBenchmark xmlns:fh="http://faban.sunsource.net/ns/fabanharness"
+        xmlns:fd="http://faban.sunsource.net/ns/fabandriver"
+        xmlns:fa="http://faban.sunsource.net/ns/faban">
+    <fh:jvmConfig>
+        <fh:javaHome>@JAVA_HOME@</fh:javaHome>
+        <fh:jvmOptions>-classpath @VERTX_AGENT_CLASSPATH@ @FABAN_AGENT_OPTIONS@</fh:jvmOptions>
+    </fh:jvmConfig>
+    
+    <fa:runConfig definition="org.jboss.vertx.perf.harness.VertxBenchmark">
+        <fh:description>Vertx Benchmark Driver</fh:description>
+        <fh:timeSync>false</fh:timeSync>
+        <fa:hostConfig>
+            <fa:host>@DRIVER_HOSTS@</fa:host>
+            <fh:enabled>true</fh:enabled>
+            <fh:cpus>0</fh:cpus>
+            <fh:tools>NONE</fh:tools>
+            <fh:userCommands/>
+        </fa:hostConfig>
+        <fa:scale>@BENCHMARK_TXRATE@</fa:scale>
+        <fa:runControl>
+            <fa:rampUp>60</fa:rampUp>
+            <fa:steadyState>30</fa:steadyState>
+            <fa:rampDown>60</fa:rampDown>
+        </fa:runControl>
+        <fd:outputDir>@OUTPUT_DIR@</fd:outputDir>
+        <fd:threadStart>
+            <fd:delay>10</fd:delay>
+            <fd:simultaneous>false</fd:simultaneous>
+            <fd:parallel>true</fd:parallel>
+        </fd:threadStart>
+        <fd:runtimeStats enabled="true">
+            <fd:interval>30</fd:interval>
+        </fd:runtimeStats>
+        <fd:stats>
+            <fd:interval>30</fd:interval>
+        </fd:stats>
+        <audit>false</audit>
+        <stopIfAuditFailed>false</stopIfAuditFailed>
+
+        <fd:driverConfig name="VertxDriver">
+            <fd:agents>1</fd:agents>
+            <fd:properties>
+                <fd:property>
+                    <fd:name>postURL</fd:name>
+                    <fd:value>http://@APPSERVER_HOST@:8080/form</fd:value>
+                </fd:property>
+                <fd:property>
+                    <fd:name>content-size-in-k</fd:name>
+                    <fd:value>1</fd:value>
+                </fd:property>
+            </fd:properties>
+        </fd:driverConfig>
+ 
+    </fa:runConfig>
+    
+    <appServerConfig>
+      <fa:hostConfig>
+        <fa:host>@APPSERVER_HOST@</fa:host>
+        <fa:port>@APPSERVER_PORT@</fa:port>
+        <fh:enabled>true</fh:enabled>
+        <fh:cpus>0</fh:cpus>
+        <fh:tools/>
+        <fh:userCommands/>
+        <fh:environment/>
+      </fa:hostConfig>
+    </appServerConfig>
+</VertxBenchmark>
