@@ -1,0 +1,173 @@
+import groovyx.net.http.HTTPBuilder
+import groovyx.net.http.Method
+import org.apache.http.entity.mime.MultipartEntity
+import org.apache.http.entity.mime.content.ByteArrayBody
+import org.apache.tools.ant.filters.ReplaceTokens
+import org.apache.tools.ant.taskdefs.condition.Os
+import org.apache.commons.lang3.StringUtils
+
+apply plugin: 'java'
+apply plugin: 'groovy'
+
+defaultTasks 'jar'
+
+repositories {
+   mavenCentral()
+   mavenLocal()
+}
+
+buildscript {
+    repositories {
+         mavenCentral()
+    }
+    dependencies {
+        classpath 'org.codehaus.groovy.modules.http-builder:http-builder:0.7.1'
+        classpath 'org.apache.httpcomponents:httpclient:4.3.5'
+        classpath 'org.apache.httpcomponents:httpmime:4.3.5'
+        classpath 'org.apache.commons:commons-lang3:3.5'
+    }
+}
+
+configurations {
+    harness
+}
+
+ext {
+    tok = [JAVA_HOME                                  : System.getProperty('java.home')
+         , DRIVER_HOSTS                             : fabanDriverHosts
+         , FABAN_AGENT_OPTIONS                      : fabanAgentOptions
+         , BENCHMARK_TXRATE                         : txRate
+         , APPSERVER_HOST                           : appServerHost
+         , APPSERVER_PORT                           : appServerPort
+    ]
+}
+
+task harnessJar(type: Jar, dependsOn: jar){
+    baseName 'vertx-driver-harness'
+    dependsOn jar
+    from 'src/dist'
+    into ('lib'){
+        from jar.archivePath
+        from configurations.runtime
+    }
+    exclude 'META-INF/run.template.xml'
+    from ('src/main/resources/META-INF'){
+      include 'run.template.xml'
+      into 'META-INF'
+      rename {'run.xml'}
+      filter (ReplaceTokens, tokens: tok)
+    }
+    from ('src/main/resources'){
+      exclude 'run.template.xml'
+      include ('**/benchmark.xml', '**/config.xhtml')
+    }
+}
+
+artifacts {
+    harness harnessJar
+}
+
+dependencies {
+   compileOnly 'com.sun.faban:fabanagents:1.0.3'
+   compileOnly 'com.sun.faban:fabancommon:1.0.3'
+   compileOnly 'com.sun.faban:fabandriver:1.0.3'
+   compile ('commons-httpclient:commons-httpclient:3.1') {
+      transitive false
+   }
+   compileOnly 'commons-logging:commons-logging:1.0.3'
+   compile ('org.apache.commons:commons-lang3:3.5'){
+      transitive false
+   }
+   compile ('commons-io:commons-io:2.4'){
+      transitive false
+   }
+   compile ('io.vertx:vertx-core:3.2.1'){
+      transitive false
+   }
+}
+
+processResources {
+   include '**/results_report.xsl'
+}
+
+task testJavaHome << {
+    def javaHome = "$System.env.JAVA_HOME"
+    if (javaHome == "null" || javaHome == "" || javaHome == null) {
+        throw new GradleException("JAVA_HOME is not set, please set JAVA_HOME and try again")
+    }
+}
+
+task('faban.harness.deploy', type: FabanDeployTask, dependsOn: ['testJavaHome', harnessJar], description: 'Deploy the specj benchmark to the Faban harness.') {
+    url = fabanUrl
+    path = '/deploy'
+    user = deployUser
+    password = deployPassword
+    clearConfig = deployClearconfig
+
+    doFirst { 
+      jarFile = file(project.tasks.harnessJar.archivePath)
+      logger.info ( "Deploying; $jarFile")
+    }
+}
+
+class FabanDeployTask extends DefaultTask {
+
+    String url = 'Test'
+    File jarFile = null
+    Boolean clearConfig = false
+    String user = ''
+    String password = ''
+    String path = ''
+
+    @TaskAction
+    def deployOnHarness() {
+        logger.info("url: $url")
+
+        logger.info("path: $path")
+        logger.info("jarFile: $jarFile")
+
+        def params = ['user': user, 'password': password]
+
+        logger.debug("params: " + params.toString())
+
+        if (StringUtils.isBlank(url)) {
+            throw new TaskExecutionException(this, new StopActionException("Faban Deploy Failed: url is null"))
+        }
+
+        if (StringUtils.isBlank(path)) {
+            throw new TaskExecutionException(this, new StopActionException("Faban Deploy Failed: path is null"))
+        }
+
+        if (null == jarFile) {
+            throw new TaskExecutionException(this, new StopActionException("Faban Deploy Failed: harness driver file is null"))
+        } else if (!jarFile.exists()){
+            throw new TaskExecutionException(this, new StopActionException("Faban Deploy Failed: harness driver file is not found $jarFile.absolutePath"))
+        }
+
+        def http = new HTTPBuilder(url)
+
+        MultipartEntity entity = new MultipartEntity()
+        entity.addPart("jarfile", new ByteArrayBody(jarFile.getBytes(), jarFile.absolutePath))
+
+        http.request(Method.POST) { req ->
+
+            requestContentType = 'multipart/form-data'
+
+            uri.path = path
+            uri.query = params
+            headers.'Accept' = 'text/plain'
+
+            req.entity = entity
+
+            response.success = {
+                logger.info("Faban deploy successful")
+            }
+
+            response.failure = { failresp_inner ->
+                logger.info("Faban deploy failed: " + failresp_inner.getStatusLine())
+                throw new TaskExecutionException(this, new StopActionException("Faban Deploy Failed: Server responded with failure; " + failresp_inner.getStatusLine()))
+            }
+        }
+    }
+}
+

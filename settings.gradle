@@ -16,4 +16,4 @@ include 'api'
 include 'services:webservice'
 */
 
-rootProject.name = 'vertx-faban-driver'
+rootProject.name = 'faban-vertx-driver'
