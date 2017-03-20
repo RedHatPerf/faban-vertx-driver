@@ -2,5 +2,8 @@
 <classpath>
 	<classpathentry kind="src" path="src/main/java"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="var" path="M2_REPO/com/sun/faban/fabandriver/1.0.3/fabandriver-1.0.3.jar"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/faban"/>
+	<classpathentry kind="var" path="M2_REPO/commons-io/commons-io/2.5/commons-io-2.5.jar"/>
 	<classpathentry kind="output" path="eclipsebin"/>
 </classpath>

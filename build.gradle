@@ -171,3 +171,6 @@ class FabanDeployTask extends DefaultTask {
     }
 }
 
+wrapper {
+   gradleVersion '2.14.1'
+}

@@ -46,10 +46,100 @@
                     <fd:value>http://@APPSERVER_HOST@:8080/form</fd:value>
                 </fd:property>
                 <fd:property>
-                    <fd:name>content-size-in-k</fd:name>
-                    <fd:value>1</fd:value>
+                    <fd:name>bucket-01-content-size-in-k</fd:name>
+                    <fd:value>1024</fd:value>
+                </fd:property>
+                <fd:property>
+                    <fd:name>bucket-02-content-size-in-k</fd:name>
+                    <fd:value>1024</fd:value>
+                </fd:property>
+                <fd:property>
+                    <fd:name>bucket-03-content-size-in-k</fd:name>
+                    <fd:value>1024</fd:value>
+                </fd:property>
+                <fd:property>
+                    <fd:name>bucket-04-content-size-in-k</fd:name>
+                    <fd:value>1024</fd:value>
+                </fd:property>
+                <fd:property>
+                    <fd:name>bucket-05-content-size-in-k</fd:name>
+                    <fd:value>1024</fd:value>
+                </fd:property>
+                <fd:property>
+                    <fd:name>bucket-06-content-size-in-k</fd:name>
+                    <fd:value>1024</fd:value>
+                </fd:property>
+                <fd:property>
+                    <fd:name>bucket-07-content-size-in-k</fd:name>
+                    <fd:value>1024</fd:value>
+                </fd:property>
+                <fd:property>
+                    <fd:name>bucket-08-content-size-in-k</fd:name>
+                    <fd:value>1024</fd:value>
+                </fd:property>
+                <fd:property>
+                    <fd:name>bucket-09-content-size-in-k</fd:name>
+                    <fd:value>1024</fd:value>
+                </fd:property>
+                <fd:property>
+                    <fd:name>bucket-10-content-size-in-k</fd:name>
+                    <fd:value>1024</fd:value>
+                </fd:property>
+                <fd:property>
+                    <fd:name>bucket-11-content-size-in-k</fd:name>
+                    <fd:value>1024</fd:value>
+                </fd:property>
+                <fd:property>
+                    <fd:name>bucket-12-content-size-in-k</fd:name>
+                    <fd:value>1024</fd:value>
+                </fd:property>
+                <fd:property>
+                    <fd:name>bucket-13-content-size-in-k</fd:name>
+                    <fd:value>1024</fd:value>
+                </fd:property>
+                <fd:property>
+                    <fd:name>bucket-14-content-size-in-k</fd:name>
+                    <fd:value>1024</fd:value>
+                </fd:property>
+                <fd:property>
+                    <fd:name>bucket-15-content-size-in-k</fd:name>
+                    <fd:value>1024</fd:value>
+                </fd:property>
+                <fd:property>
+                    <fd:name>bucket-16-content-size-in-k</fd:name>
+                    <fd:value>1024</fd:value>
+                </fd:property>
+                <fd:property>
+                    <fd:name>bucket-17-content-size-in-k</fd:name>
+                    <fd:value>1024</fd:value>
+                </fd:property>
+                <fd:property>
+                    <fd:name>bucket-18-content-size-in-k</fd:name>
+                    <fd:value>1024</fd:value>
+                </fd:property>
+                <fd:property>
+                    <fd:name>bucket-19-content-size-in-k</fd:name>
+                    <fd:value>1024</fd:value>
+                </fd:property>
+                <fd:property>
+                    <fd:name>bucket-20-content-size-in-k</fd:name>
+                    <fd:value>1024</fd:value>
                 </fd:property>
             </fd:properties>
+            <cycleDistribution name="1">
+               <classname>FixedTime</classname>
+               <operationNames>Bucket01</operationNames>
+               <cycleType>CycleTime</cycleType>
+               <cycleTime>100</cycleTime>
+               <cycleDeviation>0</cycleDeviation>
+            </cycleDistribution>
+            <cycleDistribution name="2">
+               <classname>FixedTime</classname>
+               <operationNames>Bucket02</operationNames>
+               <cycleType>CycleTime</cycleType>
+               <cycleMean>1000</cycleMean>
+               <cycleDeviation>0</cycleDeviation>
+            </cycleDistribution>
         </fd:driverConfig>
  
     </fa:runConfig>
