@@ -6,9 +6,9 @@ import java.io.Serializable;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.charset.Charset;
-import java.rmi.UnexpectedException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicReferenceArray;
 import java.util.logging.Logger;
 
 import javax.xml.xpath.XPathExpressionException;
@@ -35,203 +35,240 @@ import com.sun.faban.driver.Timing;
  */
 
 @BenchmarkDriver(name = "Vertx Driver", threadPerScale = 1, metric = "1threadperscale")
-@FlatMix(operations = { "postBucket01", "postBucket02" }, mix = { 50, 50 }, deviation = 2)
+@FlatMix(operations = { "postBucket00", "postBucket01" }, mix = { 50, 50 }, deviation = 2)
 
 public class PacketDistributionDriver implements Serializable {
 
-  private static final long serialVersionUID = 5788884811324069023L;
-  private DriverContext ctx;
-  private HttpTransport transport;
-  private static Logger logger;
-  private static URL postURL;
-  private Map<String, String> headers;
-  private static byte[][] postData;
-  // TODO: bucket packet size generated randomly
-  private boolean random;
-  private static final String CONTENT_LENGTH = "content-length";
+   private static final long serialVersionUID = 5788884811324069023L;
+   private DriverContext ctx;
+   private HttpTransport transport;
+   private static Logger logger;
+   private static URL postURL;
+   private Map<String, String> headers;
+   private static AtomicReferenceArray<byte[]> postData;
+   // TODO: bucket packet size generated randomly
+   private boolean random;
+   private static final String CONTENT_LENGTH = "content-length";
 
-  static {
-    if (postData == null) {
-      postData = new byte[20][];
-    }
-  }
+   static {
+      if (postData == null) {
+         // postData = new byte[20][];
+         postData = new AtomicReferenceArray<byte[]>(20);
+      }
+   }
 
-  @BenchmarkOperation(name = "postBucket01", max90th = 2.0, timing = Timing.AUTO)
-  @FixedTime(cycleType = CycleType.CYCLETIME, cycleTime = 100, cycleDeviation = 2)
-  public void postBucket01() throws UnexpectedException {
-    getLogger().entering(PacketDistributionDriver.class.getName(), "postBucket01");
-    try {
-      post(getBody(1));
-    } catch (IOException ioe) {
-      throw new UnexpectedException(ioe.getMessage());
-    } finally {
-      getLogger().exiting(PacketDistributionDriver.class.getName(), "postBucket01");
-    }
-  }
-
-  @BenchmarkOperation(name = "postBucket02", max90th = 2.0, timing = Timing.AUTO)
-  @FixedTime(cycleType = CycleType.CYCLETIME, cycleTime = 100, cycleDeviation = 2)
-  public void postBucket02() throws UnexpectedException {
-    getLogger().entering(PacketDistributionDriver.class.getName(), "postBucket02");
-    try {
-      post(getBody(2));
-    } catch (IOException ioe) {
-      throw new UnexpectedException(ioe.getMessage());
-    } finally {
-      getLogger().exiting(PacketDistributionDriver.class.getName(), "postBucket02");
-    }
-  }
-
-  protected void post(byte[] body) throws IOException {
-    getHeaders().put(CONTENT_LENGTH, new Integer(body.length).toString());
-    getTransport().readURL(getPostUrl(), body, headers);
-  }
-
-  protected void configure() {
-    logger = ctx.getLogger();
-    logger.entering(PacketDistributionDriver.class.getName(), "configure");
-    try {
+   @BenchmarkOperation(name = "postBucket00", max90th = 2.0, timing = Timing.AUTO)
+   @FixedTime(cycleType = CycleType.CYCLETIME, cycleTime = 100, cycleDeviation = 2)
+   public void postBucket00() throws UnexpectedException {
+      getLogger().entering(PacketDistributionDriver.class.getName(), "postBucket00");
       try {
-        // postURL = new URL(ctx.getXPathValue(
-        // "/VertxBenchmark/fa:runConfig/fd:driverConfig[@name='PacketDistributionDriver']/fd:properties/fd:property[fd:name='postURL']/fd:value"));
-        postURL = new URL(ctx.getXPathValue("//fd:value[../fd:name='postURL']"));
-      } catch (MalformedURLException murle) {
-        logger.severe(String.format("Url provided is malformed [%1$s] reason [%2$s].", postURL, murle.getMessage()));
-        throw new FatalException(
-            String.format("Url provided is malformed [%1$s] reason [%2$s].", postURL, murle.getMessage()), murle);
-      } catch (XPathExpressionException xpathe) {
-        throw new FatalException("Exception using the xpath to get the [postURL] value.", xpathe);
+         post(getBody(0));
+      } finally {
+         getLogger().exiting(PacketDistributionDriver.class.getName(), "postBucket00");
       }
+   }
+
+   @BenchmarkOperation(name = "postBucket01", max90th = 2.0, timing = Timing.AUTO)
+   @FixedTime(cycleType = CycleType.CYCLETIME, cycleTime = 100, cycleDeviation = 2)
+   public void postBucket01() throws UnexpectedException {
+      getLogger().entering(PacketDistributionDriver.class.getName(), "postBucket01");
       try {
-        Charset c = Charset.forName("UTF-8");
-        char[] b = new String("hellosun").toCharArray();
-        createBytes(1, getDriverContext().getXPathValue("//fd:value[../fd:name='bucket-01-content-size-in-k']"), b, c);
-        createBytes(2, getDriverContext().getXPathValue("//fd:value[../fd:name='bucket-02-content-size-in-k']"), b, c);
-        createBytes(3, getDriverContext().getXPathValue("//fd:value[../fd:name='bucket-03-content-size-in-k']"), b, c);
-        createBytes(4, getDriverContext().getXPathValue("//fd:value[../fd:name='bucket-04-content-size-in-k']"), b, c);
-        createBytes(5, getDriverContext().getXPathValue("//fd:value[../fd:name='bucket-05-content-size-in-k']"), b, c);
-        createBytes(6, getDriverContext().getXPathValue("//fd:value[../fd:name='bucket-06-content-size-in-k']"), b, c);
-        createBytes(7, getDriverContext().getXPathValue("//fd:value[../fd:name='bucket-07-content-size-in-k']"), b, c);
-        createBytes(8, getDriverContext().getXPathValue("//fd:value[../fd:name='bucket-08-content-size-in-k']"), b, c);
-        createBytes(9, getDriverContext().getXPathValue("//fd:value[../fd:name='bucket-09-content-size-in-k']"), b, c);
-        createBytes(10, getDriverContext().getXPathValue("//fd:value[../fd:name='bucket-10-content-size-in-k']"), b, c);
-        createBytes(11, getDriverContext().getXPathValue("//fd:value[../fd:name='bucket-11-content-size-in-k']"), b, c);
-        createBytes(12, getDriverContext().getXPathValue("//fd:value[../fd:name='bucket-12-content-size-in-k']"), b, c);
-        createBytes(13, getDriverContext().getXPathValue("//fd:value[../fd:name='bucket-13-content-size-in-k']"), b, c);
-        createBytes(14, getDriverContext().getXPathValue("//fd:value[../fd:name='bucket-14-content-size-in-k']"), b, c);
-        createBytes(15, getDriverContext().getXPathValue("//fd:value[../fd:name='bucket-15-content-size-in-k']"), b, c);
-        createBytes(16, getDriverContext().getXPathValue("//fd:value[../fd:name='bucket-16-content-size-in-k']"), b, c);
-        createBytes(17, getDriverContext().getXPathValue("//fd:value[../fd:name='bucket-17-content-size-in-k']"), b, c);
-        createBytes(18, getDriverContext().getXPathValue("//fd:value[../fd:name='bucket-18-content-size-in-k']"), b, c);
-        createBytes(19, getDriverContext().getXPathValue("//fd:value[../fd:name='bucket-19-content-size-in-k']"), b, c);
-        createBytes(20, getDriverContext().getXPathValue("//fd:value[../fd:name='bucket-20-content-size-in-k']"), b, c);
-      } catch (XPathExpressionException xpathe) {
-        throw new FatalException("Exception using the xpath to get the [content-size-in-k] value.", xpathe);
+         post(getBody(1));
+      } finally {
+         getLogger().exiting(PacketDistributionDriver.class.getName(), "postBucket01");
       }
+   }
 
-    } catch (Throwable e) {
-      throw new FatalException("Fatal error during configure.", e);
-    } finally {
-      logger.exiting(PacketDistributionDriver.class.getName(), "configure");
-    }
-  }
-
-  protected void validate() {
-    logger.entering(PacketDistributionDriver.class.getName(), "validate");
-    try {
-      if (null == postURL) {
-        throw new FatalException("postURL field is null.");
+   protected void post(byte[] body) throws UnexpectedException {
+      getHeaders().put(CONTENT_LENGTH, new Integer(body.length).toString());
+      HttpTransport t = getTransport();
+      try {
+         if (0 == t.readURL(getPostUrl(), body, headers)) {
+            throw new UnexpectedException("The response did not contain any data. Zero in length");
+         }
+      } catch (IOException ioe) {
+         throw new UnexpectedException("Network problem processing request/response", ioe);
       }
-      if (null == postData) {
-        throw new FatalException("postData is null");
+      checkResponse(t);
+   }
+
+   private HttpTransport checkResponse(HttpTransport t) throws UnexpectedException {
+      int rc = t.getResponseCode();
+      if (200 != rc) {
+         throw new UnexpectedException(String.format(
+               "The http response contained a failure code [%1$d] with this body [%2$s] and these headers [%3$s]", rc,
+               t.getResponseBuffer(), t.dumpResponseHeaders()));
       }
-      if (null == headers) {
-        throw new FatalException("headers is null");
+      return t;
+   }
+
+   protected void configure() {
+      logger = ctx.getLogger();
+      logger.entering(PacketDistributionDriver.class.getName(), "configure");
+      try {
+         try {
+            postURL = new URL(ctx.getXPathValue("//fd:value[../fd:name='postURL']"));
+         } catch (MalformedURLException murle) {
+            logger.severe(
+                  String.format("Url provided is malformed [%1$s] reason [%2$s].", postURL, murle.getMessage()));
+            throw new FatalException(
+                  String.format("Url provided is malformed [%1$s] reason [%2$s].", postURL, murle.getMessage()), murle);
+         } catch (XPathExpressionException xpathe) {
+            throw new FatalException("Exception using the xpath to get the [postURL] value.", xpathe);
+         }
+         try {
+            Charset c = Charset.forName("UTF-8");
+            char[] b = new String("hellosun").toCharArray();
+            createBytes(0, getDriverContext().getXPathValue("//fd:value[../fd:name='bucket-01-content-size-in-k']"), b,
+                  c);
+            createBytes(1, getDriverContext().getXPathValue("//fd:value[../fd:name='bucket-02-content-size-in-k']"), b,
+                  c);
+            createBytes(2, getDriverContext().getXPathValue("//fd:value[../fd:name='bucket-03-content-size-in-k']"), b,
+                  c);
+            createBytes(3, getDriverContext().getXPathValue("//fd:value[../fd:name='bucket-04-content-size-in-k']"), b,
+                  c);
+            createBytes(4, getDriverContext().getXPathValue("//fd:value[../fd:name='bucket-05-content-size-in-k']"), b,
+                  c);
+            createBytes(5, getDriverContext().getXPathValue("//fd:value[../fd:name='bucket-06-content-size-in-k']"), b,
+                  c);
+            createBytes(6, getDriverContext().getXPathValue("//fd:value[../fd:name='bucket-07-content-size-in-k']"), b,
+                  c);
+            createBytes(7, getDriverContext().getXPathValue("//fd:value[../fd:name='bucket-08-content-size-in-k']"), b,
+                  c);
+            createBytes(8, getDriverContext().getXPathValue("//fd:value[../fd:name='bucket-09-content-size-in-k']"), b,
+                  c);
+            createBytes(9, getDriverContext().getXPathValue("//fd:value[../fd:name='bucket-10-content-size-in-k']"), b,
+                  c);
+            createBytes(10, getDriverContext().getXPathValue("//fd:value[../fd:name='bucket-11-content-size-in-k']"), b,
+                  c);
+            createBytes(11, getDriverContext().getXPathValue("//fd:value[../fd:name='bucket-12-content-size-in-k']"), b,
+                  c);
+            createBytes(12, getDriverContext().getXPathValue("//fd:value[../fd:name='bucket-13-content-size-in-k']"), b,
+                  c);
+            createBytes(13, getDriverContext().getXPathValue("//fd:value[../fd:name='bucket-14-content-size-in-k']"), b,
+                  c);
+            createBytes(14, getDriverContext().getXPathValue("//fd:value[../fd:name='bucket-15-content-size-in-k']"), b,
+                  c);
+            createBytes(15, getDriverContext().getXPathValue("//fd:value[../fd:name='bucket-16-content-size-in-k']"), b,
+                  c);
+            createBytes(16, getDriverContext().getXPathValue("//fd:value[../fd:name='bucket-17-content-size-in-k']"), b,
+                  c);
+            createBytes(17, getDriverContext().getXPathValue("//fd:value[../fd:name='bucket-18-content-size-in-k']"), b,
+                  c);
+            createBytes(18, getDriverContext().getXPathValue("//fd:value[../fd:name='bucket-19-content-size-in-k']"), b,
+                  c);
+            createBytes(19, getDriverContext().getXPathValue("//fd:value[../fd:name='bucket-20-content-size-in-k']"), b,
+                  c);
+         } catch (XPathExpressionException xpathe) {
+            throw new FatalException("Exception using the xpath to get the [content-size-in-k] value.", xpathe);
+         }
+         headers.put("Keep-Alive", "true");
+      } catch (Throwable e) {
+         throw new FatalException("Fatal error during configure.", e);
+      } finally {
+         logger.exiting(PacketDistributionDriver.class.getName(), "configure");
       }
-      if (null == getBody(1)){
-        throw new FatalException("body content for bucket 01 is null");
+   }
+
+   protected void validate() {
+      logger.entering(PacketDistributionDriver.class.getName(), "validate");
+      try {
+         if (null == postURL) {
+            throw new FatalException("postURL field is null.");
+         }
+         if (null == postData) {
+            throw new FatalException("postData is null");
+         }
+         if (null == headers) {
+            throw new FatalException("headers is null");
+         }
+         if (null == getBody(1)) {
+            throw new FatalException("body content for bucket 01 is null");
+         }
+         if (null == getBody(2)) {
+            throw new FatalException("body content for bucket 02 is null");
+         }
+      } finally {
+         logger.exiting(PacketDistributionDriver.class.getName(), "validate");
       }
-      if (null == getBody(2)){
-        throw new FatalException("body content for bucket 02 is null");
+   }
+
+   /**
+    * 
+    * @param bucket array position
+    * @param amount
+    * @param template
+    * @param c
+    * @throws IllegalArgumentException
+    * @throws IOException
+    */
+   protected void createBytes(int bucket, String amount, char[] template, Charset c)
+         throws IllegalArgumentException, IOException {
+      if (null == amount) {
+         throw new IllegalArgumentException(String.format("amount parameter was null for bucket [%1$s]", bucket));
       }
-    } finally {
-      logger.exiting(PacketDistributionDriver.class.getName(), "validate");
-    }
-  }
+      if (null == getBody(bucket)) {
+         int sizeInK = Integer.parseInt(amount);
+         int sizeInBytes = asBytes(sizeInK);
 
-  protected void createBytes(int bucket, String amount, char[] template, Charset c)
-      throws IllegalArgumentException, IOException {
-    if (null == amount) {
-      throw new IllegalArgumentException(String.format("amount parameter was null for bucket [%1$s]", bucket));
-    }
-    if (null == getBody(bucket)) {
-      int sizeInK = Integer.parseInt(amount);
-      int sizeInBytes = asBytes(sizeInK);
-
-      ByteArrayOutputStream baos = new ByteArrayOutputStream(sizeInBytes);
-      sizeInBytes = asIndex(sizeInBytes);
-      for (int i = 0; i < sizeInBytes; i += template.length) {
-        try {
-          IOUtils.write(template, baos, c);
-        } catch (IndexOutOfBoundsException ioobe) {
-          logger.severe(String.format("Array handling issue [%1$d] size [%2$d]", i, sizeInBytes));
-          throw ioobe;
-        }
+         ByteArrayOutputStream baos = new ByteArrayOutputStream(sizeInBytes);
+         sizeInBytes = asIndex(sizeInBytes);
+         for (int i = 0; i < sizeInBytes; i += template.length) {
+            try {
+               IOUtils.write(template, baos, c);
+            } catch (IndexOutOfBoundsException ioobe) {
+               logger.severe(String.format("Array handling issue [%1$d] size [%2$d]", i, sizeInBytes));
+               throw ioobe;
+            }
+         }
+         setBody(bucket, baos.toByteArray());
       }
-      setBody(bucket, baos.toByteArray());
-    }
-  }
+   }
 
-  public PacketDistributionDriver() {
-    ctx = DriverContext.getContext();
-    transport = HttpTransport.newInstance();
-    headers = new HashMap<String, String>();
-    configure();
-    validate();
-  }
+   public PacketDistributionDriver() {
+      ctx = DriverContext.getContext();
+      transport = HttpTransport.newInstance();
+      headers = new HashMap<String, String>();
+      configure();
+      validate();
+   }
 
-  protected DriverContext getDriverContext() {
-    return ctx;
-  }
+   protected DriverContext getDriverContext() {
+      return ctx;
+   }
 
-  protected Map<String, String> getHeaders() {
-    return headers;
-  }
+   protected Map<String, String> getHeaders() {
+      return headers;
+   }
 
-  protected URL getPostUrl() {
-    return postURL;
-  }
+   protected URL getPostUrl() {
+      return postURL;
+   }
 
-  protected HttpTransport getTransport() {
-    return transport;
-  }
+   protected HttpTransport getTransport() {
+      return transport;
+   }
 
-  protected byte[] getBody(int bucket) {
-    return postData[asIndex(bucket)];
-  }
+   byte[] getBody(int bucket) {
+      return postData.get(bucket);
+   }
 
-  protected byte[] setBody(int bucket, byte[] b){
-    postData[asIndex(bucket)] = b;
-    return b;
-  }
+   protected void setBody(int bucket, byte[] b) {
+      postData.compareAndSet(bucket, null, b);
+   }
 
-  protected byte[][] getBucketBodies() {
-    return postData;
-  }
+   protected int asBytes(int k) {
+      return k * 1024;
+   }
 
-  protected int asBytes(int k) {
-    return k * 1024;
-  }
+   protected int asIndex(int s) {
+      return s -= 1;
+   }
 
-  protected int asIndex(int s) {
-    return s -= 1;
-  }
-
-  protected Logger getLogger() {
-    return logger;
-  }
+   protected Logger getLogger() {
+      return logger;
+   }
 }
-
 /*
  * Example of benchmark run packet counts. ┌ Packet Distribution by Size
  * ─────────────────────────────────────────────────────────────────────────────
