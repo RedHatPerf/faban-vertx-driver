@@ -58,7 +58,7 @@ public class PacketDistributionDriver implements Serializable {
    }
 
    @BenchmarkOperation(name = "postBucket00", max90th = 2.0, timing = Timing.AUTO)
-   @FixedTime(cycleType = CycleType.CYCLETIME, cycleTime = 100, cycleDeviation = 2)
+   @FixedTime(cycleType = CycleType.CYCLETIME, cycleTime = 1000, cycleDeviation = 2)
    public void postBucket00() throws UnexpectedException {
       getLogger().entering(PacketDistributionDriver.class.getName(), "postBucket00");
       try {
@@ -69,7 +69,7 @@ public class PacketDistributionDriver implements Serializable {
    }
 
    @BenchmarkOperation(name = "postBucket01", max90th = 2.0, timing = Timing.AUTO)
-   @FixedTime(cycleType = CycleType.CYCLETIME, cycleTime = 100, cycleDeviation = 2)
+   @FixedTime(cycleType = CycleType.CYCLETIME, cycleTime = 1000, cycleDeviation = 2)
    public void postBucket01() throws UnexpectedException {
       getLogger().entering(PacketDistributionDriver.class.getName(), "postBucket01");
       try {
