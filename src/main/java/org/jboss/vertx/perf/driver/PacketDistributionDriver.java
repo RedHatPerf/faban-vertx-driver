@@ -35,7 +35,13 @@ import com.sun.faban.driver.Timing;
  */
 
 @BenchmarkDriver(name = "Vertx Driver", threadPerScale = 1, metric = "1threadperscale")
-@FlatMix(operations = { "postBucket00", "postBucket01" }, mix = { 50, 50 }, deviation = 2)
+@FlatMix(operations = { "postBucket00", "postBucket01", "postBucket02",
+      "postBucket03", "postBucket04", "postBucket05", "postBucket06", 
+      "postBucket07", "postBucket08", "postBucket09", "postBucket10", 
+      "postBucket11", "postBucket12", "postBucket13", "postBucket14", 
+      "postBucket15", "postBucket16", "postBucket17", "postBucket18", 
+         "postBucket19" }, mix = { 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5,
+         5, 5, 5, 5, 5}, deviation = 2)
 
 public class PacketDistributionDriver implements Serializable {
 
@@ -79,7 +85,208 @@ public class PacketDistributionDriver implements Serializable {
       }
    }
 
+   @BenchmarkOperation(name = "postBucket02", max90th = 2.0, timing = Timing.AUTO)
+   @FixedTime(cycleType = CycleType.CYCLETIME, cycleTime = 1000, cycleDeviation = 2)
+   public void postBucket02() throws UnexpectedException {
+      getLogger().entering(PacketDistributionDriver.class.getName(), "postBucket01");
+      try {
+         post(getBody(2));
+      } finally {
+         getLogger().exiting(PacketDistributionDriver.class.getName(), "postBucket01");
+      }
+   }
+
+   @BenchmarkOperation(name = "postBucket03", max90th = 2.0, timing = Timing.AUTO)
+   @FixedTime(cycleType = CycleType.CYCLETIME, cycleTime = 1000, cycleDeviation = 2)
+   public void postBucket03() throws UnexpectedException {
+      getLogger().entering(PacketDistributionDriver.class.getName(), "postBucket01");
+      try {
+         post(getBody(3));
+      } finally {
+         getLogger().exiting(PacketDistributionDriver.class.getName(), "postBucket01");
+      }
+   }
+
+   @BenchmarkOperation(name = "postBucket04", max90th = 2.0, timing = Timing.AUTO)
+   @FixedTime(cycleType = CycleType.CYCLETIME, cycleTime = 1000, cycleDeviation = 2)
+   public void postBucket04() throws UnexpectedException {
+      getLogger().entering(PacketDistributionDriver.class.getName(), "postBucket01");
+      try {
+         post(getBody(4));
+      } finally {
+         getLogger().exiting(PacketDistributionDriver.class.getName(), "postBucket01");
+      }
+   }
+
+   @BenchmarkOperation(name = "postBucket05", max90th = 2.0, timing = Timing.AUTO)
+   @FixedTime(cycleType = CycleType.CYCLETIME, cycleTime = 1000, cycleDeviation = 2)
+   public void postBucket05() throws UnexpectedException {
+      getLogger().entering(PacketDistributionDriver.class.getName(), "postBucket01");
+      try {
+         post(getBody(5));
+      } finally {
+         getLogger().exiting(PacketDistributionDriver.class.getName(), "postBucket01");
+      }
+   }
+
+   @BenchmarkOperation(name = "postBucket06", max90th = 2.0, timing = Timing.AUTO)
+   @FixedTime(cycleType = CycleType.CYCLETIME, cycleTime = 1000, cycleDeviation = 2)
+   public void postBucket06() throws UnexpectedException {
+      getLogger().entering(PacketDistributionDriver.class.getName(), "postBucket01");
+      try {
+         post(getBody(6));
+      } finally {
+         getLogger().exiting(PacketDistributionDriver.class.getName(), "postBucket01");
+      }
+   }
+
+   @BenchmarkOperation(name = "postBucket07", max90th = 2.0, timing = Timing.AUTO)
+   @FixedTime(cycleType = CycleType.CYCLETIME, cycleTime = 1000, cycleDeviation = 2)
+   public void postBucket07() throws UnexpectedException {
+      getLogger().entering(PacketDistributionDriver.class.getName(), "postBucket01");
+      try {
+         post(getBody(7));
+      } finally {
+         getLogger().exiting(PacketDistributionDriver.class.getName(), "postBucket01");
+      }
+   }
+
+   @BenchmarkOperation(name = "postBucket08", max90th = 2.0, timing = Timing.AUTO)
+   @FixedTime(cycleType = CycleType.CYCLETIME, cycleTime = 1000, cycleDeviation = 2)
+   public void postBucket08() throws UnexpectedException {
+      getLogger().entering(PacketDistributionDriver.class.getName(), "postBucket01");
+      try {
+         post(getBody(8));
+      } finally {
+         getLogger().exiting(PacketDistributionDriver.class.getName(), "postBucket01");
+      }
+   }
+
+   @BenchmarkOperation(name = "postBucket09", max90th = 2.0, timing = Timing.AUTO)
+   @FixedTime(cycleType = CycleType.CYCLETIME, cycleTime = 1000, cycleDeviation = 2)
+   public void postBucket09() throws UnexpectedException {
+      getLogger().entering(PacketDistributionDriver.class.getName(), "postBucket01");
+      try {
+         post(getBody(9));
+      } finally {
+         getLogger().exiting(PacketDistributionDriver.class.getName(), "postBucket01");
+      }
+   }
+
+   @BenchmarkOperation(name = "postBucket10", max90th = 2.0, timing = Timing.AUTO)
+   @FixedTime(cycleType = CycleType.CYCLETIME, cycleTime = 1000, cycleDeviation = 2)
+   public void postBucket10() throws UnexpectedException {
+      getLogger().entering(PacketDistributionDriver.class.getName(), "postBucket01");
+      try {
+         post(getBody(10));
+      } finally {
+         getLogger().exiting(PacketDistributionDriver.class.getName(), "postBucket01");
+      }
+   }
+
+   @BenchmarkOperation(name = "postBucket11", max90th = 2.0, timing = Timing.AUTO)
+   @FixedTime(cycleType = CycleType.CYCLETIME, cycleTime = 1000, cycleDeviation = 2)
+   public void postBucket11() throws UnexpectedException {
+      getLogger().entering(PacketDistributionDriver.class.getName(), "postBucket01");
+      try {
+         post(getBody(11));
+      } finally {
+         getLogger().exiting(PacketDistributionDriver.class.getName(), "postBucket01");
+      }
+   }
+
+   @BenchmarkOperation(name = "postBucket12", max90th = 2.0, timing = Timing.AUTO)
+   @FixedTime(cycleType = CycleType.CYCLETIME, cycleTime = 1000, cycleDeviation = 2)
+   public void postBucket12() throws UnexpectedException {
+      getLogger().entering(PacketDistributionDriver.class.getName(), "postBucket01");
+      try {
+         post(getBody(12));
+      } finally {
+         getLogger().exiting(PacketDistributionDriver.class.getName(), "postBucket01");
+      }
+   }
+
+   @BenchmarkOperation(name = "postBucket13", max90th = 2.0, timing = Timing.AUTO)
+   @FixedTime(cycleType = CycleType.CYCLETIME, cycleTime = 1000, cycleDeviation = 2)
+   public void postBucket13() throws UnexpectedException {
+      getLogger().entering(PacketDistributionDriver.class.getName(), "postBucket01");
+      try {
+         post(getBody(13));
+      } finally {
+         getLogger().exiting(PacketDistributionDriver.class.getName(), "postBucket01");
+      }
+   }
+
+   @BenchmarkOperation(name = "postBucket14", max90th = 2.0, timing = Timing.AUTO)
+   @FixedTime(cycleType = CycleType.CYCLETIME, cycleTime = 1000, cycleDeviation = 2)
+   public void postBucket14() throws UnexpectedException {
+      getLogger().entering(PacketDistributionDriver.class.getName(), "postBucket01");
+      try {
+         post(getBody(14));
+      } finally {
+         getLogger().exiting(PacketDistributionDriver.class.getName(), "postBucket01");
+      }
+   }
+
+   @BenchmarkOperation(name = "postBucket15", max90th = 2.0, timing = Timing.AUTO)
+   @FixedTime(cycleType = CycleType.CYCLETIME, cycleTime = 1000, cycleDeviation = 2)
+   public void postBucket15() throws UnexpectedException {
+      getLogger().entering(PacketDistributionDriver.class.getName(), "postBucket01");
+      try {
+         post(getBody(15));
+      } finally {
+         getLogger().exiting(PacketDistributionDriver.class.getName(), "postBucket01");
+      }
+   }
+
+   @BenchmarkOperation(name = "postBucket16", max90th = 2.0, timing = Timing.AUTO)
+   @FixedTime(cycleType = CycleType.CYCLETIME, cycleTime = 1000, cycleDeviation = 2)
+   public void postBucket16() throws UnexpectedException {
+      getLogger().entering(PacketDistributionDriver.class.getName(), "postBucket01");
+      try {
+         post(getBody(16));
+      } finally {
+         getLogger().exiting(PacketDistributionDriver.class.getName(), "postBucket01");
+      }
+   }
+
+   @BenchmarkOperation(name = "postBucket17", max90th = 2.0, timing = Timing.AUTO)
+   @FixedTime(cycleType = CycleType.CYCLETIME, cycleTime = 1000, cycleDeviation = 2)
+   public void postBucket17() throws UnexpectedException {
+      getLogger().entering(PacketDistributionDriver.class.getName(), "postBucket01");
+      try {
+         post(getBody(17));
+      } finally {
+         getLogger().exiting(PacketDistributionDriver.class.getName(), "postBucket01");
+      }
+   }
+
+   @BenchmarkOperation(name = "postBucket18", max90th = 2.0, timing = Timing.AUTO)
+   @FixedTime(cycleType = CycleType.CYCLETIME, cycleTime = 1000, cycleDeviation = 2)
+   public void postBucket18() throws UnexpectedException {
+      getLogger().entering(PacketDistributionDriver.class.getName(), "postBucket01");
+      try {
+         post(getBody(18));
+      } finally {
+         getLogger().exiting(PacketDistributionDriver.class.getName(), "postBucket01");
+      }
+   }
+
+   @BenchmarkOperation(name = "postBucket19", max90th = 2.0, timing = Timing.AUTO)
+   @FixedTime(cycleType = CycleType.CYCLETIME, cycleTime = 1000, cycleDeviation = 2)
+   public void postBucket19() throws UnexpectedException {
+      getLogger().entering(PacketDistributionDriver.class.getName(), "postBucket01");
+      try {
+         post(getBody(19));
+      } finally {
+         getLogger().exiting(PacketDistributionDriver.class.getName(), "postBucket01");
+      }
+   }
+
    protected void post(byte[] body) throws UnexpectedException {
+      if (body.length == 0){
+         return;
+      }
       getHeaders().put(CONTENT_LENGTH, new Integer(body.length).toString());
       HttpTransport t = getTransport();
       try {
@@ -163,7 +370,6 @@ public class PacketDistributionDriver implements Serializable {
             throw new FatalException("Exception using the xpath to get the [content-size-in-k] value.", xpathe);
          }
          headers.put("Keep-Alive", "true");
-         headers.put("Content-Type", "application/json");
       } catch (Throwable e) {
          throw new FatalException("Fatal error during configure.", e);
       } finally {
@@ -210,6 +416,10 @@ public class PacketDistributionDriver implements Serializable {
       }
       if (null == getBody(bucket)) {
          int sizeInK = Integer.parseInt(amount);
+         if (sizeInK == 0) {
+            setBody(bucket, new byte[0]);
+            return;
+         }
          int sizeInBytes = asBytes(sizeInK);
 
          ByteArrayOutputStream baos = new ByteArrayOutputStream(sizeInBytes);
