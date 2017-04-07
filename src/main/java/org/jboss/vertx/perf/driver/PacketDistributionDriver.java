@@ -327,48 +327,48 @@ public class PacketDistributionDriver implements Serializable {
          try {
             Charset c = Charset.forName("UTF-8");
             char[] b = new String("hellosun").toCharArray();
-            createBytes(0, getDriverContext().getXPathValue("//fd:value[../fd:name='bucket-01-content-size-in-k']"), b,
+            createBytes(0, getDriverContext().getXPathValue("//fd:value[../fd:name='bucket-01-content-size-in-bytes']"), b,
                   c);
-            createBytes(1, getDriverContext().getXPathValue("//fd:value[../fd:name='bucket-02-content-size-in-k']"), b,
+            createBytes(1, getDriverContext().getXPathValue("//fd:value[../fd:name='bucket-02-content-size-in-bytes']"), b,
                   c);
-            createBytes(2, getDriverContext().getXPathValue("//fd:value[../fd:name='bucket-03-content-size-in-k']"), b,
+            createBytes(2, getDriverContext().getXPathValue("//fd:value[../fd:name='bucket-03-content-size-in-bytes']"), b,
                   c);
-            createBytes(3, getDriverContext().getXPathValue("//fd:value[../fd:name='bucket-04-content-size-in-k']"), b,
+            createBytes(3, getDriverContext().getXPathValue("//fd:value[../fd:name='bucket-04-content-size-in-bytes']"), b,
                   c);
-            createBytes(4, getDriverContext().getXPathValue("//fd:value[../fd:name='bucket-05-content-size-in-k']"), b,
+            createBytes(4, getDriverContext().getXPathValue("//fd:value[../fd:name='bucket-05-content-size-in-bytes']"), b,
                   c);
-            createBytes(5, getDriverContext().getXPathValue("//fd:value[../fd:name='bucket-06-content-size-in-k']"), b,
+            createBytes(5, getDriverContext().getXPathValue("//fd:value[../fd:name='bucket-06-content-size-in-bytes']"), b,
                   c);
-            createBytes(6, getDriverContext().getXPathValue("//fd:value[../fd:name='bucket-07-content-size-in-k']"), b,
+            createBytes(6, getDriverContext().getXPathValue("//fd:value[../fd:name='bucket-07-content-size-in-bytes']"), b,
                   c);
-            createBytes(7, getDriverContext().getXPathValue("//fd:value[../fd:name='bucket-08-content-size-in-k']"), b,
+            createBytes(7, getDriverContext().getXPathValue("//fd:value[../fd:name='bucket-08-content-size-in-bytes']"), b,
                   c);
-            createBytes(8, getDriverContext().getXPathValue("//fd:value[../fd:name='bucket-09-content-size-in-k']"), b,
+            createBytes(8, getDriverContext().getXPathValue("//fd:value[../fd:name='bucket-09-content-size-in-bytes']"), b,
                   c);
-            createBytes(9, getDriverContext().getXPathValue("//fd:value[../fd:name='bucket-10-content-size-in-k']"), b,
+            createBytes(9, getDriverContext().getXPathValue("//fd:value[../fd:name='bucket-10-content-size-in-bytes']"), b,
                   c);
-            createBytes(10, getDriverContext().getXPathValue("//fd:value[../fd:name='bucket-11-content-size-in-k']"), b,
+            createBytes(10, getDriverContext().getXPathValue("//fd:value[../fd:name='bucket-11-content-size-in-bytes']"), b,
                   c);
-            createBytes(11, getDriverContext().getXPathValue("//fd:value[../fd:name='bucket-12-content-size-in-k']"), b,
+            createBytes(11, getDriverContext().getXPathValue("//fd:value[../fd:name='bucket-12-content-size-in-bytes']"), b,
                   c);
-            createBytes(12, getDriverContext().getXPathValue("//fd:value[../fd:name='bucket-13-content-size-in-k']"), b,
+            createBytes(12, getDriverContext().getXPathValue("//fd:value[../fd:name='bucket-13-content-size-in-bytes']"), b,
                   c);
-            createBytes(13, getDriverContext().getXPathValue("//fd:value[../fd:name='bucket-14-content-size-in-k']"), b,
+            createBytes(13, getDriverContext().getXPathValue("//fd:value[../fd:name='bucket-14-content-size-in-bytes']"), b,
                   c);
-            createBytes(14, getDriverContext().getXPathValue("//fd:value[../fd:name='bucket-15-content-size-in-k']"), b,
+            createBytes(14, getDriverContext().getXPathValue("//fd:value[../fd:name='bucket-15-content-size-in-bytes']"), b,
                   c);
-            createBytes(15, getDriverContext().getXPathValue("//fd:value[../fd:name='bucket-16-content-size-in-k']"), b,
+            createBytes(15, getDriverContext().getXPathValue("//fd:value[../fd:name='bucket-16-content-size-in-bytes']"), b,
                   c);
-            createBytes(16, getDriverContext().getXPathValue("//fd:value[../fd:name='bucket-17-content-size-in-k']"), b,
+            createBytes(16, getDriverContext().getXPathValue("//fd:value[../fd:name='bucket-17-content-size-in-bytes']"), b,
                   c);
-            createBytes(17, getDriverContext().getXPathValue("//fd:value[../fd:name='bucket-18-content-size-in-k']"), b,
+            createBytes(17, getDriverContext().getXPathValue("//fd:value[../fd:name='bucket-18-content-size-in-bytes']"), b,
                   c);
-            createBytes(18, getDriverContext().getXPathValue("//fd:value[../fd:name='bucket-19-content-size-in-k']"), b,
+            createBytes(18, getDriverContext().getXPathValue("//fd:value[../fd:name='bucket-19-content-size-in-bytes']"), b,
                   c);
-            createBytes(19, getDriverContext().getXPathValue("//fd:value[../fd:name='bucket-20-content-size-in-k']"), b,
+            createBytes(19, getDriverContext().getXPathValue("//fd:value[../fd:name='bucket-20-content-size-in-bytes']"), b,
                   c);
          } catch (XPathExpressionException xpathe) {
-            throw new FatalException("Exception using the xpath to get the [content-size-in-k] value.", xpathe);
+            throw new FatalException("Exception using the xpath to get the [content-size-in-bytes] value.", xpathe);
          }
          headers.put("Keep-Alive", "true");
       } catch (Throwable e) {
