@@ -10,7 +10,7 @@ import com.sun.faban.driver.FixedTime;
     name      = "Vertx Benchmark",
     version   = "0.1",
     drivers   = {
-        PacketDistributionDriver.class, PacketDistributionDriver.class
+        PacketDistributionDriver.class
         },
     scaleName = "IR",
     metric    = "metric"

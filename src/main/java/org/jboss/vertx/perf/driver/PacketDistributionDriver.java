@@ -68,7 +68,7 @@ public class PacketDistributionDriver implements Serializable {
    public void postBucket00() throws UnexpectedException {
       getLogger().entering(PacketDistributionDriver.class.getName(), "postBucket00");
       try {
-         post(getBody(0));
+         post(getBody(0), "00");
       } finally {
          getLogger().exiting(PacketDistributionDriver.class.getName(), "postBucket00");
       }
@@ -79,7 +79,7 @@ public class PacketDistributionDriver implements Serializable {
    public void postBucket01() throws UnexpectedException {
       getLogger().entering(PacketDistributionDriver.class.getName(), "postBucket01");
       try {
-         post(getBody(1));
+         post(getBody(1), "01");
       } finally {
          getLogger().exiting(PacketDistributionDriver.class.getName(), "postBucket01");
       }
@@ -90,7 +90,7 @@ public class PacketDistributionDriver implements Serializable {
    public void postBucket02() throws UnexpectedException {
       getLogger().entering(PacketDistributionDriver.class.getName(), "postBucket01");
       try {
-         post(getBody(2));
+         post(getBody(2), "02");
       } finally {
          getLogger().exiting(PacketDistributionDriver.class.getName(), "postBucket01");
       }
@@ -101,7 +101,7 @@ public class PacketDistributionDriver implements Serializable {
    public void postBucket03() throws UnexpectedException {
       getLogger().entering(PacketDistributionDriver.class.getName(), "postBucket01");
       try {
-         post(getBody(3));
+         post(getBody(3), "03");
       } finally {
          getLogger().exiting(PacketDistributionDriver.class.getName(), "postBucket01");
       }
@@ -112,7 +112,7 @@ public class PacketDistributionDriver implements Serializable {
    public void postBucket04() throws UnexpectedException {
       getLogger().entering(PacketDistributionDriver.class.getName(), "postBucket01");
       try {
-         post(getBody(4));
+         post(getBody(4), "04");
       } finally {
          getLogger().exiting(PacketDistributionDriver.class.getName(), "postBucket01");
       }
@@ -123,7 +123,7 @@ public class PacketDistributionDriver implements Serializable {
    public void postBucket05() throws UnexpectedException {
       getLogger().entering(PacketDistributionDriver.class.getName(), "postBucket01");
       try {
-         post(getBody(5));
+         post(getBody(5), "05");
       } finally {
          getLogger().exiting(PacketDistributionDriver.class.getName(), "postBucket01");
       }
@@ -134,7 +134,7 @@ public class PacketDistributionDriver implements Serializable {
    public void postBucket06() throws UnexpectedException {
       getLogger().entering(PacketDistributionDriver.class.getName(), "postBucket01");
       try {
-         post(getBody(6));
+         post(getBody(6), "06");
       } finally {
          getLogger().exiting(PacketDistributionDriver.class.getName(), "postBucket01");
       }
@@ -145,7 +145,7 @@ public class PacketDistributionDriver implements Serializable {
    public void postBucket07() throws UnexpectedException {
       getLogger().entering(PacketDistributionDriver.class.getName(), "postBucket01");
       try {
-         post(getBody(7));
+         post(getBody(7), "07");
       } finally {
          getLogger().exiting(PacketDistributionDriver.class.getName(), "postBucket01");
       }
@@ -156,7 +156,7 @@ public class PacketDistributionDriver implements Serializable {
    public void postBucket08() throws UnexpectedException {
       getLogger().entering(PacketDistributionDriver.class.getName(), "postBucket01");
       try {
-         post(getBody(8));
+         post(getBody(8), "08");
       } finally {
          getLogger().exiting(PacketDistributionDriver.class.getName(), "postBucket01");
       }
@@ -167,7 +167,7 @@ public class PacketDistributionDriver implements Serializable {
    public void postBucket09() throws UnexpectedException {
       getLogger().entering(PacketDistributionDriver.class.getName(), "postBucket01");
       try {
-         post(getBody(9));
+         post(getBody(9), "09");
       } finally {
          getLogger().exiting(PacketDistributionDriver.class.getName(), "postBucket01");
       }
@@ -178,7 +178,7 @@ public class PacketDistributionDriver implements Serializable {
    public void postBucket10() throws UnexpectedException {
       getLogger().entering(PacketDistributionDriver.class.getName(), "postBucket01");
       try {
-         post(getBody(10));
+         post(getBody(10), "10");
       } finally {
          getLogger().exiting(PacketDistributionDriver.class.getName(), "postBucket01");
       }
@@ -189,7 +189,7 @@ public class PacketDistributionDriver implements Serializable {
    public void postBucket11() throws UnexpectedException {
       getLogger().entering(PacketDistributionDriver.class.getName(), "postBucket01");
       try {
-         post(getBody(11));
+         post(getBody(11), "11");
       } finally {
          getLogger().exiting(PacketDistributionDriver.class.getName(), "postBucket01");
       }
@@ -200,7 +200,7 @@ public class PacketDistributionDriver implements Serializable {
    public void postBucket12() throws UnexpectedException {
       getLogger().entering(PacketDistributionDriver.class.getName(), "postBucket01");
       try {
-         post(getBody(12));
+         post(getBody(12), "12");
       } finally {
          getLogger().exiting(PacketDistributionDriver.class.getName(), "postBucket01");
       }
@@ -211,7 +211,7 @@ public class PacketDistributionDriver implements Serializable {
    public void postBucket13() throws UnexpectedException {
       getLogger().entering(PacketDistributionDriver.class.getName(), "postBucket01");
       try {
-         post(getBody(13));
+         post(getBody(13), "13");
       } finally {
          getLogger().exiting(PacketDistributionDriver.class.getName(), "postBucket01");
       }
@@ -222,7 +222,7 @@ public class PacketDistributionDriver implements Serializable {
    public void postBucket14() throws UnexpectedException {
       getLogger().entering(PacketDistributionDriver.class.getName(), "postBucket01");
       try {
-         post(getBody(14));
+         post(getBody(14), "14");
       } finally {
          getLogger().exiting(PacketDistributionDriver.class.getName(), "postBucket01");
       }
@@ -233,7 +233,7 @@ public class PacketDistributionDriver implements Serializable {
    public void postBucket15() throws UnexpectedException {
       getLogger().entering(PacketDistributionDriver.class.getName(), "postBucket01");
       try {
-         post(getBody(15));
+         post(getBody(15), "15");
       } finally {
          getLogger().exiting(PacketDistributionDriver.class.getName(), "postBucket01");
       }
@@ -244,7 +244,7 @@ public class PacketDistributionDriver implements Serializable {
    public void postBucket16() throws UnexpectedException {
       getLogger().entering(PacketDistributionDriver.class.getName(), "postBucket01");
       try {
-         post(getBody(16));
+         post(getBody(16), "16");
       } finally {
          getLogger().exiting(PacketDistributionDriver.class.getName(), "postBucket01");
       }
@@ -255,7 +255,7 @@ public class PacketDistributionDriver implements Serializable {
    public void postBucket17() throws UnexpectedException {
       getLogger().entering(PacketDistributionDriver.class.getName(), "postBucket01");
       try {
-         post(getBody(17));
+         post(getBody(17), "17");
       } finally {
          getLogger().exiting(PacketDistributionDriver.class.getName(), "postBucket01");
       }
@@ -266,7 +266,7 @@ public class PacketDistributionDriver implements Serializable {
    public void postBucket18() throws UnexpectedException {
       getLogger().entering(PacketDistributionDriver.class.getName(), "postBucket01");
       try {
-         post(getBody(18));
+         post(getBody(18), "18");
       } finally {
          getLogger().exiting(PacketDistributionDriver.class.getName(), "postBucket01");
       }
@@ -277,17 +277,18 @@ public class PacketDistributionDriver implements Serializable {
    public void postBucket19() throws UnexpectedException {
       getLogger().entering(PacketDistributionDriver.class.getName(), "postBucket01");
       try {
-         post(getBody(19));
+         post(getBody(19), "19");
       } finally {
          getLogger().exiting(PacketDistributionDriver.class.getName(), "postBucket01");
       }
    }
 
-   protected void post(byte[] body) throws UnexpectedException {
+   protected void post(byte[] body, String bucket) throws UnexpectedException {
       if (body.length == 0){
          return;
       }
       getHeaders().put(CONTENT_LENGTH, new Integer(body.length).toString());
+      getHeaders().put("bucket", bucket);
       HttpTransport t = getTransport();
       try {
          if (0 == t.readURL(getPostUrl(), body, headers)) {
@@ -415,12 +416,12 @@ public class PacketDistributionDriver implements Serializable {
          throw new IllegalArgumentException(String.format("amount parameter was null for bucket [%1$s]", bucket));
       }
       if (null == getBody(bucket)) {
-         int sizeInK = Integer.parseInt(amount);
-         if (sizeInK == 0) {
-            setBody(bucket, new byte[0]);
-            return;
-         }
-         int sizeInBytes = asBytes(sizeInK);
+         int sizeInBytes = Integer.parseInt(amount);
+//         if (sizeInK == 0) {
+//            setBody(bucket, new byte[0]);
+//            return;
+//         }
+//         int sizeInBytes = asBytes(sizeInK);
 
          ByteArrayOutputStream baos = new ByteArrayOutputStream(sizeInBytes);
          sizeInBytes = asIndex(sizeInBytes);
@@ -432,7 +433,9 @@ public class PacketDistributionDriver implements Serializable {
                throw ioobe;
             }
          }
-         setBody(bucket, baos.toByteArray());
+         byte[] b = baos.toByteArray();
+         setBody(bucket, b);
+         assert b.length == sizeInBytes : String.format("Length comparison of expected [%1$d] and actual [%2$d] failed.", sizeInBytes, b.length);
       }
    }
 
