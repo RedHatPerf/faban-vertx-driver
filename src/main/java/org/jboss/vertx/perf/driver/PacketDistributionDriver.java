@@ -290,9 +290,7 @@ public class PacketDistributionDriver implements Serializable {
       getHeaders().put("bucket", bucket);
       HttpTransport t = getTransport();
       try {
-         if (0 == t.readURL(getPostUrl(), body, headers)) {
-            throw new UnexpectedException("The response did not contain any data. Zero in length");
-         }
+         t.readURL(getPostUrl(), body, headers);
       } catch (IOException ioe) {
          throw new UnexpectedException("Network problem processing request/response", ioe);
       }
@@ -370,7 +368,7 @@ public class PacketDistributionDriver implements Serializable {
             throw new FatalException("Exception using the xpath to get the [content-size-in-bytes] value.", xpathe);
          }
          headers.put("Keep-Alive", "true");
-	 headers.put("Content-Type", "application/json");
+	     headers.put("Content-Type", "application/json");
       } catch (Throwable e) {
          throw new FatalException("Fatal error during configure.", e);
       } finally {
