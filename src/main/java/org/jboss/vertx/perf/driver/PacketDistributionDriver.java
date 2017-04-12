@@ -370,6 +370,7 @@ public class PacketDistributionDriver implements Serializable {
             throw new FatalException("Exception using the xpath to get the [content-size-in-bytes] value.", xpathe);
          }
          headers.put("Keep-Alive", "true");
+	 headers.put("Content-Type", "application/json");
       } catch (Throwable e) {
          throw new FatalException("Fatal error during configure.", e);
       } finally {
