@@ -64,7 +64,7 @@ public class PacketDistributionDriver implements Serializable {
 
    @BenchmarkOperation(name = "postBucket00", max90th = 2.0, timing = Timing.AUTO)
    @FixedTime(cycleType = CycleType.CYCLETIME, cycleTime = 1000, cycleDeviation = 2)
-   public void postBucket00() throws UnexpectedException {
+   public void postBucket00() throws FatalException {
       getLogger().entering(PacketDistributionDriver.class.getName(), "postBucket00");
       try {
          post(getBody(0), "00");
@@ -75,7 +75,7 @@ public class PacketDistributionDriver implements Serializable {
 
    @BenchmarkOperation(name = "postBucket01", max90th = 2.0, timing = Timing.AUTO)
    @FixedTime(cycleType = CycleType.CYCLETIME, cycleTime = 1000, cycleDeviation = 2)
-   public void postBucket01() throws UnexpectedException {
+   public void postBucket01() throws FatalException {
       getLogger().entering(PacketDistributionDriver.class.getName(), "postBucket01");
       try {
          post(getBody(1), "01");
@@ -86,7 +86,7 @@ public class PacketDistributionDriver implements Serializable {
 
    @BenchmarkOperation(name = "postBucket02", max90th = 2.0, timing = Timing.AUTO)
    @FixedTime(cycleType = CycleType.CYCLETIME, cycleTime = 1000, cycleDeviation = 2)
-   public void postBucket02() throws UnexpectedException {
+   public void postBucket02() throws FatalException {
       getLogger().entering(PacketDistributionDriver.class.getName(), "postBucket01");
       try {
          post(getBody(2), "02");
@@ -97,7 +97,7 @@ public class PacketDistributionDriver implements Serializable {
 
    @BenchmarkOperation(name = "postBucket03", max90th = 2.0, timing = Timing.AUTO)
    @FixedTime(cycleType = CycleType.CYCLETIME, cycleTime = 1000, cycleDeviation = 2)
-   public void postBucket03() throws UnexpectedException {
+   public void postBucket03() throws FatalException {
       getLogger().entering(PacketDistributionDriver.class.getName(), "postBucket01");
       try {
          post(getBody(3), "03");
@@ -108,7 +108,7 @@ public class PacketDistributionDriver implements Serializable {
 
    @BenchmarkOperation(name = "postBucket04", max90th = 2.0, timing = Timing.AUTO)
    @FixedTime(cycleType = CycleType.CYCLETIME, cycleTime = 1000, cycleDeviation = 2)
-   public void postBucket04() throws UnexpectedException {
+   public void postBucket04() throws FatalException {
       getLogger().entering(PacketDistributionDriver.class.getName(), "postBucket01");
       try {
          post(getBody(4), "04");
@@ -119,7 +119,7 @@ public class PacketDistributionDriver implements Serializable {
 
    @BenchmarkOperation(name = "postBucket05", max90th = 2.0, timing = Timing.AUTO)
    @FixedTime(cycleType = CycleType.CYCLETIME, cycleTime = 1000, cycleDeviation = 2)
-   public void postBucket05() throws UnexpectedException {
+   public void postBucket05() throws FatalException {
       getLogger().entering(PacketDistributionDriver.class.getName(), "postBucket01");
       try {
          post(getBody(5), "05");
@@ -130,7 +130,7 @@ public class PacketDistributionDriver implements Serializable {
 
    @BenchmarkOperation(name = "postBucket06", max90th = 2.0, timing = Timing.AUTO)
    @FixedTime(cycleType = CycleType.CYCLETIME, cycleTime = 1000, cycleDeviation = 2)
-   public void postBucket06() throws UnexpectedException {
+   public void postBucket06() throws FatalException {
       getLogger().entering(PacketDistributionDriver.class.getName(), "postBucket01");
       try {
          post(getBody(6), "06");
@@ -141,7 +141,7 @@ public class PacketDistributionDriver implements Serializable {
 
    @BenchmarkOperation(name = "postBucket07", max90th = 2.0, timing = Timing.AUTO)
    @FixedTime(cycleType = CycleType.CYCLETIME, cycleTime = 1000, cycleDeviation = 2)
-   public void postBucket07() throws UnexpectedException {
+   public void postBucket07() throws FatalException {
       getLogger().entering(PacketDistributionDriver.class.getName(), "postBucket01");
       try {
          post(getBody(7), "07");
@@ -152,7 +152,7 @@ public class PacketDistributionDriver implements Serializable {
 
    @BenchmarkOperation(name = "postBucket08", max90th = 2.0, timing = Timing.AUTO)
    @FixedTime(cycleType = CycleType.CYCLETIME, cycleTime = 1000, cycleDeviation = 2)
-   public void postBucket08() throws UnexpectedException {
+   public void postBucket08() throws FatalException {
       getLogger().entering(PacketDistributionDriver.class.getName(), "postBucket01");
       try {
          post(getBody(8), "08");
@@ -163,7 +163,7 @@ public class PacketDistributionDriver implements Serializable {
 
    @BenchmarkOperation(name = "postBucket09", max90th = 2.0, timing = Timing.AUTO)
    @FixedTime(cycleType = CycleType.CYCLETIME, cycleTime = 1000, cycleDeviation = 2)
-   public void postBucket09() throws UnexpectedException {
+   public void postBucket09() throws FatalException {
       getLogger().entering(PacketDistributionDriver.class.getName(), "postBucket01");
       try {
          post(getBody(9), "09");
@@ -174,7 +174,7 @@ public class PacketDistributionDriver implements Serializable {
 
    @BenchmarkOperation(name = "postBucket10", max90th = 2.0, timing = Timing.AUTO)
    @FixedTime(cycleType = CycleType.CYCLETIME, cycleTime = 1000, cycleDeviation = 2)
-   public void postBucket10() throws UnexpectedException {
+   public void postBucket10() throws FatalException {
       getLogger().entering(PacketDistributionDriver.class.getName(), "postBucket01");
       try {
          post(getBody(10), "10");
@@ -185,7 +185,7 @@ public class PacketDistributionDriver implements Serializable {
 
    @BenchmarkOperation(name = "postBucket11", max90th = 2.0, timing = Timing.AUTO)
    @FixedTime(cycleType = CycleType.CYCLETIME, cycleTime = 1000, cycleDeviation = 2)
-   public void postBucket11() throws UnexpectedException {
+   public void postBucket11() throws FatalException {
       getLogger().entering(PacketDistributionDriver.class.getName(), "postBucket01");
       try {
          post(getBody(11), "11");
@@ -196,7 +196,7 @@ public class PacketDistributionDriver implements Serializable {
 
    @BenchmarkOperation(name = "postBucket12", max90th = 2.0, timing = Timing.AUTO)
    @FixedTime(cycleType = CycleType.CYCLETIME, cycleTime = 1000, cycleDeviation = 2)
-   public void postBucket12() throws UnexpectedException {
+   public void postBucket12() throws FatalException {
       getLogger().entering(PacketDistributionDriver.class.getName(), "postBucket01");
       try {
          post(getBody(12), "12");
@@ -207,7 +207,7 @@ public class PacketDistributionDriver implements Serializable {
 
    @BenchmarkOperation(name = "postBucket13", max90th = 2.0, timing = Timing.AUTO)
    @FixedTime(cycleType = CycleType.CYCLETIME, cycleTime = 1000, cycleDeviation = 2)
-   public void postBucket13() throws UnexpectedException {
+   public void postBucket13() throws FatalException {
       getLogger().entering(PacketDistributionDriver.class.getName(), "postBucket01");
       try {
          post(getBody(13), "13");
@@ -218,7 +218,7 @@ public class PacketDistributionDriver implements Serializable {
 
    @BenchmarkOperation(name = "postBucket14", max90th = 2.0, timing = Timing.AUTO)
    @FixedTime(cycleType = CycleType.CYCLETIME, cycleTime = 1000, cycleDeviation = 2)
-   public void postBucket14() throws UnexpectedException {
+   public void postBucket14() throws FatalException {
       getLogger().entering(PacketDistributionDriver.class.getName(), "postBucket01");
       try {
          post(getBody(14), "14");
@@ -229,7 +229,7 @@ public class PacketDistributionDriver implements Serializable {
 
    @BenchmarkOperation(name = "postBucket15", max90th = 2.0, timing = Timing.AUTO)
    @FixedTime(cycleType = CycleType.CYCLETIME, cycleTime = 1000, cycleDeviation = 2)
-   public void postBucket15() throws UnexpectedException {
+   public void postBucket15() throws FatalException {
       getLogger().entering(PacketDistributionDriver.class.getName(), "postBucket01");
       try {
          post(getBody(15), "15");
@@ -240,7 +240,7 @@ public class PacketDistributionDriver implements Serializable {
 
    @BenchmarkOperation(name = "postBucket16", max90th = 2.0, timing = Timing.AUTO)
    @FixedTime(cycleType = CycleType.CYCLETIME, cycleTime = 1000, cycleDeviation = 2)
-   public void postBucket16() throws UnexpectedException {
+   public void postBucket16() throws FatalException {
       getLogger().entering(PacketDistributionDriver.class.getName(), "postBucket01");
       try {
          post(getBody(16), "16");
@@ -251,7 +251,7 @@ public class PacketDistributionDriver implements Serializable {
 
    @BenchmarkOperation(name = "postBucket17", max90th = 2.0, timing = Timing.AUTO)
    @FixedTime(cycleType = CycleType.CYCLETIME, cycleTime = 1000, cycleDeviation = 2)
-   public void postBucket17() throws UnexpectedException {
+   public void postBucket17() throws FatalException {
       getLogger().entering(PacketDistributionDriver.class.getName(), "postBucket01");
       try {
          post(getBody(17), "17");
@@ -262,7 +262,7 @@ public class PacketDistributionDriver implements Serializable {
 
    @BenchmarkOperation(name = "postBucket18", max90th = 2.0, timing = Timing.AUTO)
    @FixedTime(cycleType = CycleType.CYCLETIME, cycleTime = 1000, cycleDeviation = 2)
-   public void postBucket18() throws UnexpectedException {
+   public void postBucket18() throws FatalException {
       getLogger().entering(PacketDistributionDriver.class.getName(), "postBucket01");
       try {
          post(getBody(18), "18");
@@ -273,7 +273,7 @@ public class PacketDistributionDriver implements Serializable {
 
    @BenchmarkOperation(name = "postBucket19", max90th = 2.0, timing = Timing.AUTO)
    @FixedTime(cycleType = CycleType.CYCLETIME, cycleTime = 1000, cycleDeviation = 2)
-   public void postBucket19() throws UnexpectedException {
+   public void postBucket19() throws FatalException {
       getLogger().entering(PacketDistributionDriver.class.getName(), "postBucket01");
       try {
          post(getBody(19), "19");
@@ -282,7 +282,7 @@ public class PacketDistributionDriver implements Serializable {
       }
    }
 
-   protected void post(byte[] body, String bucket) throws UnexpectedException {
+   protected void post(byte[] body, String bucket) throws FatalException {
       if (body.length == 0){
          return;
       }
@@ -292,15 +292,15 @@ public class PacketDistributionDriver implements Serializable {
       try {
          t.readURL(getPostUrl(), body, headers);
       } catch (IOException ioe) {
-         throw new UnexpectedException("Network problem processing request/response", ioe);
+         throw new FatalException("Network problem processing request/response", ioe);
       }
       checkResponse(t);
    }
 
-   private HttpTransport checkResponse(HttpTransport t) throws UnexpectedException {
+   private HttpTransport checkResponse(HttpTransport t) throws FatalException {
       int rc = t.getResponseCode();
       if (200 != rc) {
-         throw new UnexpectedException(String.format(
+         throw new FatalException(String.format(
                "The http response contained a failure code [%1$d] with this body [%2$s] and these headers [%3$s]", rc,
                t.getResponseBuffer(), t.dumpResponseHeaders()));
       }
