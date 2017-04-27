@@ -368,7 +368,7 @@ public class PacketDistributionDriver implements Serializable {
             throw new FatalException("Exception using the xpath to get the [content-size-in-bytes] value.", xpathe);
          }
          headers.put("Keep-Alive", "true");
-	     headers.put("Content-Type", "application/json");
+	      headers.put("Content-Type", "application/json");
       } catch (Throwable e) {
          throw new FatalException("Fatal error during configure.", e);
       } finally {
@@ -432,6 +432,7 @@ public class PacketDistributionDriver implements Serializable {
             }
          }
          byte[] b = baos.toByteArray();
+         IOUtils.closeQuietly(baos);
          setBody(bucket, b);
          assert b.length == sizeInBytes : String.format("Length comparison of expected [%1$d] and actual [%2$d] failed.", sizeInBytes, b.length);
       }
