@@ -8,6 +8,7 @@ import java.net.URL;
 import java.nio.charset.Charset;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.atomic.AtomicReferenceArray;
 import java.util.logging.Logger;
 
@@ -24,6 +25,7 @@ import com.sun.faban.driver.FixedTime;
 import com.sun.faban.driver.FlatMix;
 import com.sun.faban.driver.HttpTransport;
 import com.sun.faban.driver.Timing;
+import com.sun.faban.driver.transport.sunhttp.ThreadCookieHandler;
 
 /**
  * Purpose of this driver is to simulate application traffic. Without
@@ -54,6 +56,10 @@ public class PacketDistributionDriver implements Serializable {
    // TODO: bucket packet size generated randomly
    private boolean random;
    private static final String CONTENT_LENGTH = "content-length";
+   private int threadNum;
+   private static int threadCount;
+   private static CountDownLatch configLatch = new CountDownLatch(1);
+   private static CountDownLatch initLatch = new CountDownLatch(1);
 
    static {
       if (postData == null) {
@@ -310,69 +316,96 @@ public class PacketDistributionDriver implements Serializable {
    protected void configure() {
       logger = ctx.getLogger();
       logger.entering(PacketDistributionDriver.class.getName(), "configure");
+      threadNum = threadCount++;
+      doConfigOncePerAgent(configLatch);
+      doInitOncePerAgent(initLatch);
+      logger.exiting(PacketDistributionDriver.class.getName(), "configure");
+   }
+
+   private void doConfigOncePerAgent(CountDownLatch latch) throws FatalException{
       try {
-         try {
-            postURL = new URL(ctx.getXPathValue("//fd:value[../fd:name='postURL']"));
-         } catch (MalformedURLException murle) {
-            logger.severe(
-                  String.format("Url provided is malformed [%1$s] reason [%2$s].", postURL, murle.getMessage()));
-            throw new FatalException(
-                  String.format("Url provided is malformed [%1$s] reason [%2$s].", postURL, murle.getMessage()), murle);
-         } catch (XPathExpressionException xpathe) {
-            throw new FatalException("Exception using the xpath to get the [postURL] value.", xpathe);
+         if (threadNum == 0) {
+            try {
+               postURL = new URL(ctx.getXPathValue("//fd:value[../fd:name='postURL']"));
+            } catch (MalformedURLException murle) {
+               logger.severe(
+                     String.format("Url provided is malformed [%1$s] reason [%2$s].", postURL, murle.getMessage()));
+               throw new FatalException(
+                     String.format("Url provided is malformed [%1$s] reason [%2$s].", postURL, murle.getMessage()), murle);
+            } catch (XPathExpressionException xpathe) {
+               throw new FatalException("Exception using the xpath to get the [postURL] value.", xpathe);
+            }
+            headers.put("Keep-Alive", "true");
+            headers.put("Content-Type", "application/json");
+         } else {
+            latch.await();
          }
-         try {
-            Charset c = Charset.forName("UTF-8");
-            char[] b = new String("hellosun").toCharArray();
-            createBytes(0, getDriverContext().getXPathValue("//fd:value[../fd:name='bucket-00-content-size-in-bytes']"), b,
-                  c);
-            createBytes(1, getDriverContext().getXPathValue("//fd:value[../fd:name='bucket-01-content-size-in-bytes']"), b,
-                  c);
-            createBytes(2, getDriverContext().getXPathValue("//fd:value[../fd:name='bucket-02-content-size-in-bytes']"), b,
-                  c);
-            createBytes(3, getDriverContext().getXPathValue("//fd:value[../fd:name='bucket-03-content-size-in-bytes']"), b,
-                  c);
-            createBytes(4, getDriverContext().getXPathValue("//fd:value[../fd:name='bucket-04-content-size-in-bytes']"), b,
-                  c);
-            createBytes(5, getDriverContext().getXPathValue("//fd:value[../fd:name='bucket-05-content-size-in-bytes']"), b,
-                  c);
-            createBytes(6, getDriverContext().getXPathValue("//fd:value[../fd:name='bucket-06-content-size-in-bytes']"), b,
-                  c);
-            createBytes(7, getDriverContext().getXPathValue("//fd:value[../fd:name='bucket-07-content-size-in-bytes']"), b,
-                  c);
-            createBytes(8, getDriverContext().getXPathValue("//fd:value[../fd:name='bucket-08-content-size-in-bytes']"), b,
-                  c);
-            createBytes(9, getDriverContext().getXPathValue("//fd:value[../fd:name='bucket-09-content-size-in-bytes']"), b,
-                  c);
-            createBytes(10, getDriverContext().getXPathValue("//fd:value[../fd:name='bucket-10-content-size-in-bytes']"), b,
-                  c);
-            createBytes(11, getDriverContext().getXPathValue("//fd:value[../fd:name='bucket-11-content-size-in-bytes']"), b,
-                  c);
-            createBytes(12, getDriverContext().getXPathValue("//fd:value[../fd:name='bucket-12-content-size-in-bytes']"), b,
-                  c);
-            createBytes(13, getDriverContext().getXPathValue("//fd:value[../fd:name='bucket-13-content-size-in-bytes']"), b,
-                  c);
-            createBytes(14, getDriverContext().getXPathValue("//fd:value[../fd:name='bucket-14-content-size-in-bytes']"), b,
-                  c);
-            createBytes(15, getDriverContext().getXPathValue("//fd:value[../fd:name='bucket-15-content-size-in-bytes']"), b,
-                  c);
-            createBytes(16, getDriverContext().getXPathValue("//fd:value[../fd:name='bucket-16-content-size-in-bytes']"), b,
-                  c);
-            createBytes(17, getDriverContext().getXPathValue("//fd:value[../fd:name='bucket-17-content-size-in-bytes']"), b,
-                  c);
-            createBytes(18, getDriverContext().getXPathValue("//fd:value[../fd:name='bucket-18-content-size-in-bytes']"), b,
-                  c);
-            createBytes(19, getDriverContext().getXPathValue("//fd:value[../fd:name='bucket-19-content-size-in-bytes']"), b,
-                  c);
-         } catch (XPathExpressionException xpathe) {
-            throw new FatalException("Exception using the xpath to get the [content-size-in-bytes] value.", xpathe);
-         }
-         headers.put("Keep-Alive", "true");
-	      headers.put("Content-Type", "application/json");
       } catch (Throwable e) {
          throw new FatalException("Fatal error during configure.", e);
       } finally {
+         latch.countDown();
          logger.exiting(PacketDistributionDriver.class.getName(), "configure");
+      }
+   }
+
+   private void doInitOncePerAgent(CountDownLatch latch){
+      try {
+         if (threadNum == 0) {
+            try {
+               Charset c = Charset.forName("UTF-8");
+               char[] b = new String("hellosun").toCharArray();
+   
+               createBytes(0, getDriverContext().getXPathValue("//fd:value[../fd:name='bucket-00-content-size-in-bytes']"), b,
+                     c);
+               createBytes(1, getDriverContext().getXPathValue("//fd:value[../fd:name='bucket-01-content-size-in-bytes']"), b,
+                     c);
+               createBytes(2, getDriverContext().getXPathValue("//fd:value[../fd:name='bucket-02-content-size-in-bytes']"), b,
+                     c);
+               createBytes(3, getDriverContext().getXPathValue("//fd:value[../fd:name='bucket-03-content-size-in-bytes']"), b,
+                     c);
+               createBytes(4, getDriverContext().getXPathValue("//fd:value[../fd:name='bucket-04-content-size-in-bytes']"), b,
+                     c);
+               createBytes(5, getDriverContext().getXPathValue("//fd:value[../fd:name='bucket-05-content-size-in-bytes']"), b,
+                     c);
+               createBytes(6, getDriverContext().getXPathValue("//fd:value[../fd:name='bucket-06-content-size-in-bytes']"), b,
+                     c);
+               createBytes(7, getDriverContext().getXPathValue("//fd:value[../fd:name='bucket-07-content-size-in-bytes']"), b,
+                     c);
+               createBytes(8, getDriverContext().getXPathValue("//fd:value[../fd:name='bucket-08-content-size-in-bytes']"), b,
+                     c);
+               createBytes(9, getDriverContext().getXPathValue("//fd:value[../fd:name='bucket-09-content-size-in-bytes']"), b,
+                     c);
+               createBytes(10, getDriverContext().getXPathValue("//fd:value[../fd:name='bucket-10-content-size-in-bytes']"), b,
+                     c);
+               createBytes(11, getDriverContext().getXPathValue("//fd:value[../fd:name='bucket-11-content-size-in-bytes']"), b,
+                     c);
+               createBytes(12, getDriverContext().getXPathValue("//fd:value[../fd:name='bucket-12-content-size-in-bytes']"), b,
+                     c);
+               createBytes(13, getDriverContext().getXPathValue("//fd:value[../fd:name='bucket-13-content-size-in-bytes']"), b,
+                     c);
+               createBytes(14, getDriverContext().getXPathValue("//fd:value[../fd:name='bucket-14-content-size-in-bytes']"), b,
+                     c);
+               createBytes(15, getDriverContext().getXPathValue("//fd:value[../fd:name='bucket-15-content-size-in-bytes']"), b,
+                     c);
+               createBytes(16, getDriverContext().getXPathValue("//fd:value[../fd:name='bucket-16-content-size-in-bytes']"), b,
+                     c);
+               createBytes(17, getDriverContext().getXPathValue("//fd:value[../fd:name='bucket-17-content-size-in-bytes']"), b,
+                     c);
+               createBytes(18, getDriverContext().getXPathValue("//fd:value[../fd:name='bucket-18-content-size-in-bytes']"), b,
+                     c);
+               createBytes(19, getDriverContext().getXPathValue("//fd:value[../fd:name='bucket-19-content-size-in-bytes']"), b,
+                     c);
+               validate();
+            } catch (XPathExpressionException xpathe) {
+               throw new FatalException("Exception using the xpath to get the [content-size-in-bytes] value.", xpathe);
+            }
+         } else {
+            latch.await();
+         }
+      } catch (Throwable e) {
+         throw new FatalException("Fatal error during initialization.", e);
+      } finally {
+         latch.countDown();
       }
    }
 
@@ -388,14 +421,34 @@ public class PacketDistributionDriver implements Serializable {
          if (null == headers) {
             throw new FatalException("headers is null");
          }
-         if (null == getBody(1)) {
-            throw new FatalException("body content for bucket 01 is null");
-         }
-         if (null == getBody(2)) {
-            throw new FatalException("body content for bucket 02 is null");
-         }
+         validateBody(0);
+         validateBody(1);
+         validateBody(2);
+         validateBody(3);
+         validateBody(4);
+         validateBody(5);
+         validateBody(6);
+         validateBody(7);
+         validateBody(8);
+         validateBody(9);
+         validateBody(10);
+         validateBody(11);
+         validateBody(12);
+         validateBody(13);
+         validateBody(14);
+         validateBody(15);
+         validateBody(16);
+         validateBody(17);
+         validateBody(18);
+         validateBody(19);
       } finally {
          logger.exiting(PacketDistributionDriver.class.getName(), "validate");
+      }
+   }
+
+   private void validateBody(int position){
+      if (getBody(position) == null) {
+         throw new FatalException(String.format("bucket at %1$d is null", position));
       }
    }
 
@@ -415,26 +468,28 @@ public class PacketDistributionDriver implements Serializable {
       }
       if (null == getBody(bucket)) {
          int sizeInBytes = Integer.parseInt(amount);
-//         if (sizeInK == 0) {
-//            setBody(bucket, new byte[0]);
-//            return;
-//         }
-//         int sizeInBytes = asBytes(sizeInK);
-
-         ByteArrayOutputStream baos = new ByteArrayOutputStream(sizeInBytes);
-         sizeInBytes = asIndex(sizeInBytes);
-         for (int i = 0; i < sizeInBytes; i += template.length) {
-            try {
-               IOUtils.write(template, baos, c);
-            } catch (IndexOutOfBoundsException ioobe) {
-               logger.severe(String.format("Array handling issue [%1$d] size [%2$d]", i, sizeInBytes));
-               throw ioobe;
-            }
+         if (sizeInBytes % template.length != 0){
+            throw new  IllegalArgumentException(String.format("The amount of bytes configured [%3$s] for your bucket [%1$d] needs to be divisable by [%2$d].", bucket, template.length, amount));
          }
-         byte[] b = baos.toByteArray();
-         IOUtils.closeQuietly(baos);
-         setBody(bucket, b);
-         assert b.length == sizeInBytes : String.format("Length comparison of expected [%1$d] and actual [%2$d] failed.", sizeInBytes, b.length);
+
+         ByteArrayOutputStream baos = null;
+         try {
+            baos = new ByteArrayOutputStream(sizeInBytes);
+            int lastPos = asIndex(sizeInBytes);
+            for (int i = 0; i < lastPos; i += template.length) {
+               try {
+                  IOUtils.write(template, baos, c);
+               } catch (IndexOutOfBoundsException ioobe) {
+                  logger.severe(String.format("Array handling issue [%1$d] size [%2$d]", i, sizeInBytes));
+                  throw ioobe;
+               }
+            }
+            byte[] b = baos.toByteArray();
+            setBody(bucket, b);
+            assert b.length == sizeInBytes : String.format("Length comparison of expected [%1$d] and actual [%2$d] failed.", sizeInBytes, b.length);
+         } finally {
+            IOUtils.closeQuietly(baos);
+         }
       }
    }
 
@@ -443,7 +498,6 @@ public class PacketDistributionDriver implements Serializable {
       transport = HttpTransport.newInstance();
       headers = new HashMap<String, String>();
       configure();
-      validate();
    }
 
    protected DriverContext getDriverContext() {
