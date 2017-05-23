@@ -42,7 +42,7 @@ import com.sun.faban.driver.transport.sunhttp.ThreadCookieHandler;
       "postBucket07", "postBucket08", "postBucket09", "postBucket10", 
       "postBucket11", "postBucket12", "postBucket13", "postBucket14", 
       "postBucket15", "postBucket16", "postBucket17", "postBucket18", 
-      "postBucket19" }, mix = { 57.4633871211, 2.2707518051, 1.797903862, 0.0211184811, 0.1571008961, 0.0128771226, 1.9940224397, 11.3581372469, 0.5431570326, 5.6522842084, 1.4258837891, 1.0550226573, 0.4103938983, 0.2192973984, 0.1722959008, 0.3617183748, 0.0730132853, 0.2092532428, 0.1437086886, 14.6586725489}, deviation = 2)
+      "postBucket19" }, mix = { 5.0, 5.0, 5.0, 5.0, 5.0, 5.0, 5.0, 5.0, 5.0, 5.0, 5.0, 5.0, 5.0, 5.0, 5.0, 5.0, 5.0, 5.0, 5.0, 5.0}, deviation = 2)
 
 public class PacketDistributionDriver implements Serializable {
 
@@ -52,7 +52,7 @@ public class PacketDistributionDriver implements Serializable {
    private static Logger logger;
    private static URL postURL;
    private Map<String, String> headers;
-   private static AtomicReferenceArray<byte[]> postData;
+   private static byte[][] postData;
    // TODO: bucket packet size generated randomly
    private boolean random;
    private static final String CONTENT_LENGTH = "content-length";
@@ -63,8 +63,7 @@ public class PacketDistributionDriver implements Serializable {
 
    static {
       if (postData == null) {
-         // postData = new byte[20][];
-         postData = new AtomicReferenceArray<byte[]>(20);
+         postData = new byte[20][];
       }
    }
 
@@ -517,11 +516,11 @@ public class PacketDistributionDriver implements Serializable {
    }
 
    byte[] getBody(int bucket) {
-      return postData.get(bucket);
+      return postData[bucket];
    }
 
    protected void setBody(int bucket, byte[] b) {
-      postData.compareAndSet(bucket, null, b);
+      postData[bucket] = b;
    }
 
    protected int asBytes(int k) {

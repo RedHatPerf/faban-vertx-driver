@@ -7,7 +7,7 @@ import com.sun.faban.driver.CycleType;
 import com.sun.faban.driver.FixedTime;
 
 @BenchmarkDefinition (
-    name      = "Vertx Benchmark",
+    name      = "Vertx Uniform Operation Benchmark",
     version   = "0.1",
     drivers   = {
         PacketDistributionDriver.class
