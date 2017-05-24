@@ -43,7 +43,7 @@ ext {
 }
 
 task harnessJar(type: Jar, dependsOn: jar){
-    baseName 'vertx-driver-harness'
+    baseName 'vertx-uniform-driver-harness'
     dependsOn jar
     from 'src/dist'
     into ('lib'){
